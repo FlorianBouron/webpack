@@ -16,15 +16,23 @@ const config = {
     },
     {
       test: /\.scss$/,
-      use: ExtractTextWebpackPlugin.extract({
+      use: ['css-hot-loader'].concat(ExtractTextWebpackPlugin.extract({
         fallback: 'style-loader',
         use: ['css-loader', 'sass-loader', 'postcss-loader'],
-      })
+      }))
     }]
   },
   plugins: [
     new ExtractTextWebpackPlugin("styles.css")
-  ]
+  ],
+  devServer: {
+    contentBase: path.resolve(__dirname, "./public"),
+    historyApiFallback: true,
+    inline: true,
+    open: true,
+    hot: true
+  },
+  devtool: "eval-source-map"
 };
 
 module.exports = config;
